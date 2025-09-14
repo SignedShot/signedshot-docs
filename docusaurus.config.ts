@@ -57,18 +57,15 @@ const config: Config = {
         alt: 'SignedShot Logo',
         src: 'img/logo.svg',
         srcDark: 'img/logo-dark.svg', // White version for dark mode
+        href: 'https://signedshot.io',
+        target: '_self', // Optional: '_self' opens in same tab, '_blank' opens in new tab
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'mainSidebar',
-          position: 'left',
-          label: 'Docs',
-        },
-        {
           href: 'https://github.com/SignedShot',
-          label: 'GitHub',
           position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
