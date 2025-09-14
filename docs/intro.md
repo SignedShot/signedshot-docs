@@ -2,29 +2,28 @@
 sidebar_position: 1
 ---
 
-# Welcome to SignedShot
+# SignedShot — Cryptographic proof at capture
 
-**SignedShot** is a secure screenshot sharing platform that makes it easy to share visual content with confidence.
+**SignedShot** is an open-source protocol that provides cryptographic proof of media authenticity at the moment of capture. The goal is to embed verifiable signatures into photos and videos, so technical professionals can cryptographically verify they're unaltered.
 
-## Quick Start
+## The Problem
 
-Get started with SignedShot in less than 5 minutes.
+Today, anyone can edit photos or videos in seconds — making it impossible to know what's authentic. Digital media is trivially manipulated; cryptographic verification is needed.
 
-### What you'll need
+## Our Solution
 
-- A modern web browser
-- An internet connection
+SignedShot solves this by using **Secure Enclave**, **cryptographic signatures**, and **device-based attestation** to embed mathematically verifiable proof of authenticity into every photo or video you capture.
 
-## Getting Started
+Whether you're a security engineer, cryptographer, or developer building trust systems, SignedShot provides the cryptographic foundations to **verify what you capture**.
 
-SignedShot provides a simple and secure way to:
+## Core Features
 
-- **Capture** screenshots with ease
-- **Share** them securely with others
-- **Track** who views your content
-- **Maintain** complete control over your shared images
+- **Direct proof at capture**: Authenticity is cryptographically embedded at recording time, not retroactively guessed
+- **Open-source protocol**: Anyone can inspect, verify, or contribute — transparency first
+- **Two-layer model**: Clear separation of media integrity and capture trust, making the protocol flexible and evolvable
+- **Secure Enclave P-256 signing**: Hardware-backed cryptographic signatures
 
-Ready to learn more? Check out our documentation sections:
+Ready to learn more? Check out our documentation:
 
-- [How it Works](/how-it-works) - Understand the SignedShot process
+- [How it Works](/how-it-works) - Technical implementation details
 - [Demo](/demo) - See SignedShot in action

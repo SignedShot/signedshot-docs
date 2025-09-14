@@ -1,30 +1,129 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * SignedShot Documentation - Custom CSS
+ * Based on brand guidelines from SignedShot Branding Kit
  */
 
-/* You can override the default Infima variables here. */
+/* Import Manrope font (SignedShot brand typography) */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+/* SignedShot Brand Colors */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
-  --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  /* Primary Colors */
+  --ifm-color-primary: #00B163;
+  --ifm-color-primary-dark: #009843;
+  --ifm-color-primary-darker: #008a3c;
+  --ifm-color-primary-darkest: #007230;
+  --ifm-color-primary-light: #1abe6f;
+  --ifm-color-primary-lighter: #2bc577;
+  --ifm-color-primary-lightest: #4dd188;
+
+  /* SignedShot Brand Colors */
+  --ss-navy: #060F14;
+  --ss-white: #FFFFFF;
+  --ss-green-primary: #009843;
+  --ss-green-secondary: #00B163;
+
+  /* Secondary Grayscale Colors */
+  --ss-cloud: #EDEFF7;
+  --ss-smoke: #D3D6E0;
+  --ss-steel: #BCBFCC;
+  --ss-space: #9DA2B3;
+  --ss-graphite: #6E7180;
+  --ss-arsenic: #40424D;
+  --ss-phantom: #1E1E24;
+  --ss-black: #000000;
+
+  /* Typography */
+  --ifm-font-family-base: 'Manrope', system-ui, -apple-system, sans-serif;
+  --ifm-font-family-monospace: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+
+  /* Code highlighting */
+  --docusaurus-highlighted-code-line-bg: rgba(0, 152, 67, 0.1);
+
+  /* Navbar */
+  --ifm-navbar-background-color: var(--ss-white);
+  --ifm-navbar-link-color: var(--ss-navy);
+
+  /* Footer */
+  --ifm-footer-background-color: var(--ss-navy);
+  --ifm-footer-color: var(--ss-white);
+  --ifm-footer-link-color: var(--ss-smoke);
+  --ifm-footer-title-color: var(--ss-white);
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* Dark mode colors */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --ifm-color-primary: #00B163;
+  --ifm-color-primary-dark: #009843;
+  --ifm-color-primary-darker: #008a3c;
+  --ifm-color-primary-darkest: #007230;
+  --ifm-color-primary-light: #1abe6f;
+  --ifm-color-primary-lighter: #2bc577;
+  --ifm-color-primary-lightest: #4dd188;
+
+  /* Dark theme background */
+  --ifm-background-color: var(--ss-navy);
+  --ifm-background-surface-color: var(--ss-phantom);
+
+  /* Dark theme text */
+  --ifm-font-color-base: var(--ss-cloud);
+  --ifm-font-color-secondary: var(--ss-smoke);
+
+  --docusaurus-highlighted-code-line-bg: rgba(0, 177, 99, 0.2);
+
+  /* Dark navbar */
+  --ifm-navbar-background-color: var(--ss-phantom);
+  --ifm-navbar-link-color: var(--ss-cloud);
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--ifm-font-family-base);
+  font-weight: 600;
+}
+
+.hero__title {
+  font-weight: 700;
+}
+
+/* Custom SignedShot styling */
+.navbar__brand strong {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+/* Enhance code blocks with brand colors */
+.prism-code {
+  border-left: 3px solid var(--ifm-color-primary);
+}
+
+/* Custom admonition colors */
+.theme-admonition-tip {
+  border-left-color: var(--ifm-color-primary);
+}
+
+.theme-admonition-tip .admonition-icon svg {
+  fill: var(--ifm-color-primary);
+}
+
+/* Button styling */
+.button--primary {
+  background-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary);
+}
+
+.button--primary:hover {
+  background-color: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+/* Custom badge styling for technical content */
+.badge--primary {
+  background-color: var(--ifm-color-primary);
+}
+
+/* Table of contents styling */
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
 }

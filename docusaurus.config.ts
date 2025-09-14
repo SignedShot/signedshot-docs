@@ -19,7 +19,7 @@ const config: Config = {
   baseUrl: '/docs/',
 
   // GitHub pages deployment config.
-  organizationName: 'your-org', // Usually your GitHub org/user name.
+  organizationName: 'SignedShot', // Usually your GitHub org/user name.
   projectName: 'signedshot-docs', // Usually your repo name.
 
   onBrokenLinks: 'throw',
@@ -53,10 +53,10 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/signedshot-social-card.jpg',
     navbar: {
-      title: 'SignedShot',
       logo: {
         alt: 'SignedShot Logo',
         src: 'img/logo.svg',
+        srcDark: 'img/logo-dark.svg', // White version for dark mode
       },
       items: [
         {
@@ -66,7 +66,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/your-org/signedshot',
+          href: 'https://github.com/SignedShot',
           label: 'GitHub',
           position: 'right',
         },
@@ -93,7 +93,7 @@ const config: Config = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/your-org/signedshot',
+              href: 'https://github.com/SignedShot',
             },
           ],
         },
@@ -101,8 +101,12 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'SignedShot App',
+              label: 'SignedShot Site',
               href: 'https://signedshot.io',
+            },
+            {
+              label: 'GitHub Organization',
+              href: 'https://github.com/SignedShot',
             },
           ],
         },
