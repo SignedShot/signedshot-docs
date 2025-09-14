@@ -13,10 +13,10 @@ const config: Config = {
   },
 
   // Set the production url of your site here
-  url: 'https://signedshot.io',
+  url: 'https://signedshot-docs.vercel.app',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/docs/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   organizationName: 'SignedShot', // Usually your GitHub org/user name.
