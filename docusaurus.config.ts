@@ -12,11 +12,8 @@ const config: Config = {
     v4: true, // Improve compatibility with the upcoming Docusaurus v4
   },
 
-  // Set the production url of your site here
-  url: 'https://signedshot-docs.vercel.app',
-  // Set the /<baseUrl>/ pathname under which your site is served
-  // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  url: 'https://signedshot.io',
+  baseUrl: '/docs/',
 
   // GitHub pages deployment config.
   organizationName: 'SignedShot', // Usually your GitHub org/user name.
