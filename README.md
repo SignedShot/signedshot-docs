@@ -1,41 +1,55 @@
-# Website
+# SignedShot Documentation
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+Technical documentation for the SignedShot media authenticity protocol.
 
-## Installation
+Built with [Docusaurus](https://docusaurus.io/).
 
-```bash
-yarn
-```
+## Development
 
-## Local Development
+### Prerequisites
 
-```bash
-yarn start
-```
+- Node.js 18+
+- npm or yarn
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
+### Setup
 
 ```bash
-yarn build
+# Install dependencies
+npm install
+
+# Start development server
+npm run start
 ```
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+The docs will be available at `http://localhost:3000/docs/`
+
+### Build
+
+```bash
+npm run build
+```
+
+Generates static content in the `build/` directory.
+
+## Documentation Structure
+
+```
+docs/
+├── intro.md              # Getting started
+├── how-it-works.md       # Two-layer trust model explanation
+└── demo.md               # Interactive demo guide
+```
 
 ## Deployment
 
-Using SSH:
+Deployed automatically to [signedshot.io/docs](https://signedshot.io/docs) on push to main.
 
-```bash
-USE_SSH=true yarn deploy
-```
+## Related Repositories
 
-Not using SSH:
+- [signedshot-api](https://github.com/SignedShot/signedshot-api) - Backend API
+- [signedshot-ios](https://github.com/SignedShot/signedshot-ios) - iOS SDK
+- [signedshot-validator](https://github.com/SignedShot/signedshot-validator) - Verification CLI/library
 
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
+## License
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+MIT
