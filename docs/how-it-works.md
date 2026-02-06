@@ -24,9 +24,9 @@ A visual overview of the SignedShot capture and verification flow.
 │   token (once)       + capture_id      or video        Get JWT              │
 │                                                        Save sidecar         │
 └─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      │  media + sidecar
-                                      ▼
+ │
+                  │  media + sidecar
+ ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                            VERIFICATION SIDE                                │
 │                                                                             │
