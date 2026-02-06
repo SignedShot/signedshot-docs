@@ -27,6 +27,14 @@ const sidebars: SidebarsConfig = {
         'api-reference/overview',
       ],
     },
+    {
+      type: 'category',
+      label: 'Security',
+      items: [
+        'security/threat-model',
+        'security/limitations',
+      ],
+    },
   ],
 };
 
