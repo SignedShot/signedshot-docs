@@ -12,7 +12,7 @@ This guide covers advanced validation scenarios using the SignedShot Python libr
 pip install signedshot
 ```
 
-Requires Python 3.12+. The library is a compiled Rust extension for maximum performance.
+Requires Python 3.12+. The library is a compiled Rust extension.
 
 ## Validation Methods
 
