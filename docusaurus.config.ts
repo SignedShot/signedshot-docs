@@ -94,12 +94,12 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'How it Works',
-              to: '/how-it-works',
+              label: 'Getting Started',
+              to: '/',
             },
             {
-              label: 'Demo',
-              to: '/demo',
+              label: 'Concepts',
+              to: '/concepts/two-layer-trust',
             },
           ],
         },
@@ -120,7 +120,15 @@ const config: Config = {
               href: 'https://signedshot.io',
             },
             {
-              label: 'GitHub Organization',
+              label: 'How it Works',
+              href: 'https://signedshot.io/how-it-works',
+            },
+            {
+              label: 'Demo',
+              href: 'https://signedshot.io/demo',
+            },
+            {
+              label: 'GitHub',
               href: 'https://github.com/SignedShot',
             },
           ],
