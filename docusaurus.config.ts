@@ -53,6 +53,12 @@ const config: Config = {
   ],
 
   themeConfig: {
+    // Color mode configuration
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: false,
+      respectPrefersColorScheme: true,
+    },
     // Replace with your project's social card
     image: 'img/signedshot-social-card.jpg',
     navbar: {
