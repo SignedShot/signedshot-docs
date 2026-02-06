@@ -8,19 +8,21 @@ A visual overview of the SignedShot capture and verification flow.
 
 ## The Big Picture
 
+<div style={{textAlign: 'center'}}>
+
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              CAPTURE SIDE                                   │
 │                                                                             │
-│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐       │
-│   │  Device  │      │  Start   │      │ Capture  │      │   Sign   │       │
-│   │ Register │ ──── │ Session  │ ──── │  Media   │ ──── │  & Save  │       │
-│   └──────────┘      └──────────┘      └──────────┘      └──────────┘       │
+│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐        │
+│   │  Device  │      │  Start   │      │ Capture  │      │   Sign   │        │
+│   │ Register │ ──── │ Session  │ ──── │  Media   │ ──── │  & Save  │        │
+│   └──────────┘      └──────────┘      └──────────┘      └──────────┘        │
 │        │                  │                 │                 │             │
 │        ▼                  ▼                 ▼                 ▼             │
-│   Get device         Get nonce         Take photo      Sign with SE        │
-│   token (once)       + capture_id      or video        Get JWT             │
-│                                                        Save sidecar        │
+│   Get device         Get nonce         Take photo      Sign with SE         │
+│   token (once)       + capture_id      or video        Get JWT              │
+│                                                        Save sidecar         │
 └─────────────────────────────────────────────────────────────────────────────┘
                                       │
                                       │  media + sidecar
@@ -28,22 +30,26 @@ A visual overview of the SignedShot capture and verification flow.
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                            VERIFICATION SIDE                                │
 │                                                                             │
-│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐       │
-│   │  Parse   │      │  Verify  │      │  Verify  │      │  Cross   │       │
-│   │ Sidecar  │ ──── │   JWT    │ ──── │   Hash   │ ──── │ Validate │       │
-│   └──────────┘      └──────────┘      └──────────┘      └──────────┘       │
+│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐        │
+│   │  Parse   │      │  Verify  │      │  Verify  │      │  Cross   │        │
+│   │ Sidecar  │ ──── │   JWT    │ ──── │   Hash   │ ──── │ Validate │        │
+│   └──────────┘      └──────────┘      └──────────┘      └──────────┘        │
 │        │                  │                 │                 │             │
 │        ▼                  ▼                 ▼                 ▼             │
-│   Read JSON          Check sig         Compare hash      Match IDs         │
-│   structure          via JWKS          + verify sig      JWT ↔ media       │
+│   Read JSON          Check sig         Compare hash      Match IDs          │
+│   structure          via JWKS          + verify sig      JWT ↔ media        │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
+
+</div>
 
 ---
 
 ## Capture Flow
 
 ### Step 1: Register Device (Once)
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────┐                              ┌─────────────┐
@@ -57,6 +63,8 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────┘                              └─────────────┘
 ```
 
+</div>
+
 - App sends publisher ID and attestation token
 - Server verifies device via Firebase App Check
 - Server returns `device_token` (store securely, use for all future requests)
@@ -65,6 +73,8 @@ A visual overview of the SignedShot capture and verification flow.
 ---
 
 ### Step 2: Start Capture Session
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────┐                              ┌─────────────┐
@@ -77,6 +87,8 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────┘                              └─────────────┘
 ```
 
+</div>
+
 - App requests a new capture session
 - Server returns `capture_id` (unique ID for this capture) and `nonce` (one-time token)
 - Session expires after a short window
@@ -84,6 +96,8 @@ A visual overview of the SignedShot capture and verification flow.
 ---
 
 ### Step 3: Capture Media
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -97,6 +111,8 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────────────────────────────────────────────────┘
 ```
 
+</div>
+
 - User captures media through the app
 - Media bytes are available before any disk write
 
@@ -104,22 +120,26 @@ A visual overview of the SignedShot capture and verification flow.
 
 ### Step 4: Sign with Secure Enclave
 
+<div style={{textAlign: 'center'}}>
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    SECURE ENCLAVE                       │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │                                                   │  │
-│  │   media bytes ──► SHA-256 ──► hash               │  │
+│  │   media bytes ──► SHA-256 ──► hash                │  │
 │  │                                                   │  │
-│  │   hash + capture_id + timestamp ──► ECDSA sign   │  │
+│  │   hash + capture_id + timestamp ──► ECDSA sign    │  │
 │  │                                                   │  │
-│  │   Result: signature + public_key                 │  │
+│  │   Result: signature + public_key                  │  │
 │  │                                                   │  │
 │  └───────────────────────────────────────────────────┘  │
 │                                                         │
 │   Private key NEVER leaves the Secure Enclave           │
 └─────────────────────────────────────────────────────────┘
 ```
+
+</div>
 
 - Compute SHA-256 hash of media bytes
 - Sign `{hash}:{capture_id}:{timestamp}` with Secure Enclave
@@ -128,6 +148,8 @@ A visual overview of the SignedShot capture and verification flow.
 ---
 
 ### Step 5: Exchange Nonce for JWT
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────┐                              ┌─────────────┐
@@ -140,6 +162,8 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────┘                              └─────────────┘
 ```
 
+</div>
+
 - App sends the nonce received in Step 2
 - Server validates nonce (one-time use) and issues signed JWT
 - JWT contains: publisher_id, device_id, capture_id, attestation method
@@ -147,6 +171,8 @@ A visual overview of the SignedShot capture and verification flow.
 ---
 
 ### Step 6: Save Media + Sidecar
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -169,6 +195,8 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────────────────────────────────────────────────┘
 ```
 
+</div>
+
 - Save original media file (unchanged)
 - Save sidecar JSON with both trust layers
 - Files can be stored, shared, or uploaded together
@@ -178,6 +206,8 @@ A visual overview of the SignedShot capture and verification flow.
 ## Verification Flow
 
 ### Anyone Can Verify
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -205,9 +235,13 @@ A visual overview of the SignedShot capture and verification flow.
 └─────────────────────────────────────────────────────────┘
 ```
 
+</div>
+
 ---
 
 ## What Each Layer Proves
+
+<div style={{textAlign: 'center'}}>
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -235,6 +269,8 @@ A visual overview of the SignedShot capture and verification flow.
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
+
+</div>
 
 ---
 
