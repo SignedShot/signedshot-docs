@@ -9,6 +9,7 @@ const sidebars: SidebarsConfig = {
       items: [
         'concepts/two-layer-trust',
         'concepts/sidecar-format',
+        'concepts/cryptographic-specs',
       ],
     },
     {
