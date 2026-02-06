@@ -54,7 +54,7 @@ jwks = requests.get("https://api.signedshot.io/.well-known/jwks.json").text
 result = signedshot.validate_with_jwks(sidecar_json, media_bytes, jwks)
 ```
 
-This is recommended for API services that validate many photos.
+This is recommended for API services that validate many captures.
 
 ## Understanding Results
 
@@ -101,7 +101,7 @@ integrity["captured_at"]          # ISO8601 timestamp
 
 ### Validation Logic
 
-A photo is valid when all these conditions are true:
+Media is valid when all these conditions are true:
 
 1. `capture_trust["signature_valid"]` — JWT signature verifies
 2. `media_integrity["content_hash_valid"]` — File hash matches
@@ -123,7 +123,7 @@ except ValueError as e:
     print(f"Parse error: {e}")
 else:
     if result.valid:
-        print("Photo is authentic")
+        print("Media is authentic")
     else:
         print(f"Validation failed: {result.error}")
 ```
@@ -294,5 +294,5 @@ for item in validate_directory("./photos"):
 ## Next Steps
 
 - [Quick Start](/guides/quick-start) — Basic validation in 5 minutes
-- [iOS Integration](/guides/ios-integration) — Capture photos with cryptographic proof
+- [iOS Integration](/guides/ios-integration) — Capture media with cryptographic proof
 - [Sidecar Format](/concepts/sidecar-format) — Understand the proof structure

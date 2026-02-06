@@ -4,14 +4,14 @@ sidebar_position: 1
 
 # Quick Start
 
-Get up and running with SignedShot in 5 minutes. This guide shows you how to verify a photo's authenticity using the Python library.
+Get up and running with SignedShot in 5 minutes. This guide shows you how to verify media authenticity using the Python library.
 
 ## Prerequisites
 
 - Python 3.12+
-- A photo with its sidecar file (e.g., `photo.jpg` and `photo.sidecar.json`)
+- A media file with its sidecar (e.g., `photo.jpg` and `photo.sidecar.json`)
 
-Don't have test files? Use the [interactive demo](https://signedshot.io/demo) to capture a photo and download both files.
+Don't have test files? Use the [interactive demo](https://signedshot.io/demo) to capture media and download both files.
 
 ## Install the Library
 
@@ -19,16 +19,16 @@ Don't have test files? Use the [interactive demo](https://signedshot.io/demo) to
 pip install signedshot
 ```
 
-## Verify a Photo
+## Verify Media
 
 ```python
 import signedshot
 
-# Validate a photo with its sidecar
+# Validate media with its sidecar
 result = signedshot.validate_files("photo.sidecar.json", "photo.jpg")
 
 if result.valid:
-    print("✓ Photo is authentic")
+    print("✓ Media is authentic")
 else:
     print(f"✗ Validation failed: {result.error}")
 ```
@@ -120,6 +120,6 @@ If any check fails, `result.valid` is `False` and `result.error` describes the i
 
 ## Next Steps
 
-- [iOS Integration](/guides/ios-integration) — Capture photos with cryptographic proof
+- [iOS Integration](/guides/ios-integration) — Capture media with cryptographic proof
 - [Python Validation](/guides/python-validation) — Advanced validation scenarios
 - [Sidecar Format](/concepts/sidecar-format) — Understand the proof structure

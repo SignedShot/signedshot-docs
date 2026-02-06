@@ -382,6 +382,6 @@ The API currently has no rate limits. This may change in the future.
 
 ## Next Steps
 
-- [Quick Start](/guides/quick-start) — Verify photos with Python
-- [iOS Integration](/guides/ios-integration) — Capture signed photos
+- [Quick Start](/guides/quick-start) — Verify media with Python
+- [iOS Integration](/guides/ios-integration) — Capture signed media
 - [Sidecar Format](/concepts/sidecar-format) — Proof structure reference

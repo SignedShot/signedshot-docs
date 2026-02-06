@@ -8,7 +8,7 @@ SignedShot uses two complementary layers of cryptographic proof to verify media 
 
 ## Overview
 
-When you capture a photo with SignedShot, two things happen:
+When you capture media with SignedShot, two things happen:
 
 1. **Capture Trust** — The server issues a signed token proving a verified device started a capture session
 2. **Media Integrity** — The device signs the content hash using its Secure Enclave
@@ -22,7 +22,7 @@ Capture Trust answers: **"Was this captured by a legitimate device?"**
 ### How it works
 
 1. Device registers with the SignedShot API (once)
-2. Device requests a capture session before taking a photo
+2. Device requests a capture session before capturing
 3. Server verifies the device via attestation (Firebase App Check or App Attest)
 4. Server issues a signed JWT containing session details
 
@@ -121,5 +121,5 @@ Verifiers can check the attestation method to make trust decisions. For example,
 ## Next Steps
 
 - [Sidecar Format](/concepts/sidecar-format) — Full JSON schema reference
-- [Python Validation](/guides/python-validation) — Verify photos programmatically
-- [iOS Integration](/guides/ios-integration) — Capture signed photos
+- [Python Validation](/guides/python-validation) — Verify media programmatically
+- [iOS Integration](/guides/ios-integration) — Capture signed media

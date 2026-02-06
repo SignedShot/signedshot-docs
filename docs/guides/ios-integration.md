@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # iOS Integration
 
-Integrate SignedShot into your iOS app to capture photos with cryptographic proof of authenticity.
+Integrate SignedShot into your iOS app to capture media with cryptographic proof of authenticity.
 
 ## Requirements
 
@@ -89,8 +89,8 @@ Registration creates a device identity on the SignedShot backend and stores the 
 The capture flow has four steps:
 
 1. **Create session** — Get a capture ID and nonce from the backend
-2. **Capture photo** — Take the photo (your camera code)
-3. **Generate integrity** — Hash and sign the photo with Secure Enclave
+2. **Capture media** — Take the photo or video (your camera code)
+3. **Generate integrity** — Hash and sign the media with Secure Enclave
 4. **Exchange trust token** — Swap nonce for a signed JWT
 5. **Generate sidecar** — Combine trust token and integrity proof
 
@@ -103,19 +103,19 @@ let session = try await client.createCaptureSession()
 // session.expiresAt  - Session expiration time
 ```
 
-### 2. Capture Photo
+### 2. Capture Media
 
 Use your existing camera implementation. The SDK doesn't handle camera capture—it only handles signing.
 
 ```swift
-// Your camera code produces JPEG data
-let jpegData: Data = capturePhoto()
+// Your camera code produces media data (JPEG, HEIC, etc.)
+let mediaData: Data = captureMedia()
 let capturedAt = Date()
 ```
 
 ### 3. Generate Media Integrity
 
-Sign the photo with the device's Secure Enclave:
+Sign the media with the device's Secure Enclave:
 
 ```swift
 let enclaveService = SecureEnclaveService()
@@ -129,7 +129,7 @@ let integrity = try integrityService.generateIntegrity(
 ```
 
 This produces a `MediaIntegrity` object containing:
-- `contentHash` — SHA-256 of the photo (hex)
+- `contentHash` — SHA-256 of the media (hex)
 - `signature` — ECDSA signature from Secure Enclave (base64)
 - `publicKey` — Device's public key (base64)
 - `captureId` — Matches the session
@@ -160,7 +160,7 @@ let sidecarData = try generator.generate(
 
 ### 6. Save Files
 
-Save the photo and sidecar together:
+Save the media and sidecar together:
 
 ```swift
 let photoURL = documentsDirectory.appendingPathComponent("photo.jpg")
@@ -331,7 +331,7 @@ Common errors:
 
 ## Next Steps
 
-- [Quick Start](/guides/quick-start) — Verify photos with Python
+- [Quick Start](/guides/quick-start) — Verify media with Python
 - [Python Validation](/guides/python-validation) — Advanced validation scenarios
 - [Two-Layer Trust](/concepts/two-layer-trust) — Understand the trust model
 - [Sidecar Format](/concepts/sidecar-format) — Proof structure reference

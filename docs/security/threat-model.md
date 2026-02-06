@@ -18,7 +18,7 @@ SignedShot provides cryptographic proof that:
 It establishes a verified chain of custody from capture to verification.
 
 :::info Key Insight
-SignedShot proves "this device captured this content at this time" — not "this content depicts reality." A photo of a printed deepfake is still a valid SignedShot capture.
+SignedShot proves "this device captured this content at this time" — not "this content depicts reality." A capture of a printed deepfake is still a valid SignedShot capture.
 :::
 
 ## Threats Mitigated
@@ -164,7 +164,7 @@ SignedShot's security relies on these assumptions:
 
 **Attack:** An attacker photographs a deepfake displayed on a screen.
 
-**Result:** SignedShot will produce a valid capture. This is by design — SignedShot proves what was captured, not whether the subject is real. The photo is authentic; the content may not be.
+**Result:** SignedShot will produce a valid capture. This is by design — SignedShot proves what was captured, not whether the subject is real. The capture is authentic; the content may not be.
 
 ### Scenario: Compromised Server
 

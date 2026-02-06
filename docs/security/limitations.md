@@ -100,11 +100,11 @@ The SDK currently supports iOS only.
 
 **Roadmap:** Android support is planned for post-launch.
 
-### Photo Only (Currently)
+### Photos Only (Currently)
 
 Video support is in development.
 
-**Current state:** The protocol supports video (SHA-256 works on any byte stream), but the iOS SDK is optimized for photos.
+**Current state:** The protocol supports video (SHA-256 works on any byte stream), but the iOS SDK currently supports photos only.
 
 ## Comparison to Detection
 
@@ -126,14 +126,14 @@ SignedShot takes a fundamentally different approach than AI detection:
 When displaying SignedShot verification results, be clear about what was verified:
 
 **Good:**
-> "This photo was captured on a verified device on [date] and has not been modified since."
+> "This media was captured on a verified device on [date] and has not been modified since."
 
 **Misleading:**
-> "This photo is authentic and real."
+> "This media is authentic and real."
 
 ### Combine with Other Evidence
 
-SignedShot is one piece of evidence, not the complete picture:
+SignedShot is one piece of evidence, not the whole story:
 
 - Cross-reference with other sources
 - Consider context and circumstances

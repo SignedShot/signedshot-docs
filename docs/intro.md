@@ -11,7 +11,7 @@ SignedShot is an open protocol for proving photos and videos haven't been altere
 
 ## The Problem
 
-Digital manipulation is easy and getting easier. Anyone can alter a photo in seconds, and there's no built-in way to prove otherwise.
+Digital manipulation is easy and getting easier. Anyone can alter an image in seconds, and there's no built-in way to prove otherwise.
 
 This leads to an erosion of trust in visual media—and no way to prove "I didn't edit this."
 
@@ -49,17 +49,17 @@ Together they prove: *"This exact content was captured on a verified device, in 
 
 ## What You Can Do
 
-### Capture signed photos
-Use the iOS SDK to capture photos with embedded cryptographic proof.
+### Capture signed media
+Use the iOS SDK to capture media with embedded cryptographic proof.
 
 ```swift
 let session = try await signedShot.startSession()
 let sidecar = try await signedShot.createSidecar(imageData: jpegData, session: session)
 ```
 
-### Verify photos
+### Verify media
 
-Use the Python library to verify any SignedShot photo.
+Use the Python library to verify any SignedShot capture.
 
 ```bash
 pip install signedshot
@@ -78,8 +78,8 @@ Use the API directly to build custom integrations.
 
 - [Two-Layer Trust Model](/concepts/two-layer-trust) — Understand how SignedShot works
 - [Quick Start](/guides/quick-start) — Get up and running in 5 minutes
-- [iOS Integration](/guides/ios-integration) — Capture signed photos
-- [Python Validation](/guides/python-validation) — Verify photos programmatically
+- [iOS Integration](/guides/ios-integration) — Capture signed media
+- [Python Validation](/guides/python-validation) — Verify media programmatically
 - [API Reference](/api-reference/overview) — Direct API integration
 
 ## Open Source
