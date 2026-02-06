@@ -2,6 +2,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// Use '/' for Vercel previews, '/docs/' for production
+const baseUrl = process.env.VERCEL_ENV === 'preview' ? '/' : '/docs/';
+
 const config: Config = {
   title: 'SignedShot Documentation',
   tagline: 'Secure screenshot sharing made simple',
@@ -13,7 +16,7 @@ const config: Config = {
   },
 
   url: 'https://signedshot.io',
-  baseUrl: '/docs/',
+  baseUrl,
 
   // GitHub pages deployment config.
   organizationName: 'SignedShot', // Usually your GitHub org/user name.
