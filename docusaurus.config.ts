@@ -22,6 +22,15 @@ const config: Config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
+  // Plausible Analytics (same domain as main site)
+  scripts: [
+    {
+      src: 'https://plausible.io/js/script.js',
+      defer: true,
+      'data-domain': 'signedshot.io',
+    },
+  ],
+
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
