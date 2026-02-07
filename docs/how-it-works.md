@@ -2,36 +2,294 @@
 sidebar_position: 2
 ---
 
-# How it Works
+# How It Works
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+A visual overview of the SignedShot capture and verification flow.
 
-## Step 1: Capture
+## The Big Picture
 
-Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+<div style={{textAlign: 'center'}}>
 
-### Features
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                              CAPTURE SIDE                                   │
+│                                                                             │
+│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐        │
+│   │  Device  │      │  Start   │      │ Capture  │      │   Sign   │        │
+│   │ Register │ ──── │ Session  │ ──── │  Media   │ ──── │  & Save  │        │
+│   └──────────┘      └──────────┘      └──────────┘      └──────────┘        │
+│        │                  │                 │                 │             │
+│        ▼                  ▼                 ▼                 ▼             │
+│   Get device         Get nonce         Take photo      Sign with SE         │
+│   token (once)       + capture_id      or video        Get JWT              │
+│                                                        Save sidecar         │
+└─────────────────────────────────────────────────────────────────────────────┘
+ │
+                  │  media + sidecar
+ ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                            VERIFICATION SIDE                                │
+│                                                                             │
+│   ┌──────────┐      ┌──────────┐      ┌──────────┐      ┌──────────┐        │
+│   │  Parse   │      │  Verify  │      │  Verify  │      │  Cross   │        │
+│   │ Sidecar  │ ──── │   JWT    │ ──── │   Hash   │ ──── │ Validate │        │
+│   └──────────┘      └──────────┘      └──────────┘      └──────────┘        │
+│        │                  │                 │                 │             │
+│        ▼                  ▼                 ▼                 ▼             │
+│   Read JSON          Check sig         Compare hash      Match IDs          │
+│   structure          via JWKS          + verify sig      JWT ↔ media        │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
 
-- Lorem ipsum dolor sit amet
-- Consectetur adipiscing elit
-- Sed do eiusmod tempor incididunt
-- Ut labore et dolore magna aliqua
+</div>
 
-## Step 2: Sign
+---
 
-Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+## Capture Flow
 
-## Step 3: Share
+### Step 1: Register Device (Once)
 
-Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet.
+<div style={{textAlign: 'center'}}>
 
-### Security Features
+```
+┌─────────────┐                              ┌─────────────┐
+│             │  POST /devices               │             │
+│   iOS App   │  ─────────────────────────►  │   Server    │
+│             │  X-Publisher-ID              │             │
+│             │  X-Attestation-Token         │             │
+│             │                              │             │
+│             │  ◄─────────────────────────  │             │
+│             │  device_token                │             │
+└─────────────┘                              └─────────────┘
+```
 
-- End-to-end encryption
-- Digital signatures
-- Access tracking
-- Expiration controls
+</div>
 
-## Technical Details
+- App sends publisher ID and attestation token
+- Server verifies device via Firebase App Check
+- Server returns `device_token` (store securely, use for all future requests)
+- **This only happens once per device**
 
-At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.
+---
+
+### Step 2: Start Capture Session
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────┐                              ┌─────────────┐
+│             │  POST /capture/session       │             │
+│   iOS App   │  ─────────────────────────►  │   Server    │
+│             │  Authorization: Bearer       │             │
+│             │                              │             │
+│             │  ◄─────────────────────────  │             │
+│             │  capture_id, nonce           │             │
+└─────────────┘                              └─────────────┘
+```
+
+</div>
+
+- App requests a new capture session
+- Server returns `capture_id` (unique ID for this capture) and `nonce` (one-time token)
+- Session expires after a short window
+
+---
+
+### Step 3: Capture Media
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│                      📷 CAPTURE                         │
+│                                                         │
+│   User takes photo or video using the app's camera      │
+│                                                         │
+│   The raw bytes are immediately available for signing   │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+- User captures media through the app
+- Media bytes are available before any disk write
+
+---
+
+### Step 4: Sign with Secure Enclave
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                    SECURE ENCLAVE                       │
+│  ┌───────────────────────────────────────────────────┐  │
+│  │                                                   │  │
+│  │   media bytes ──► SHA-256 ──► hash                │  │
+│  │                                                   │  │
+│  │   hash + capture_id + timestamp ──► ECDSA sign    │  │
+│  │                                                   │  │
+│  │   Result: signature + public_key                  │  │
+│  │                                                   │  │
+│  └───────────────────────────────────────────────────┘  │
+│                                                         │
+│   Private key NEVER leaves the Secure Enclave           │
+└─────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+- Compute SHA-256 hash of media bytes
+- Sign `{hash}:{capture_id}:{timestamp}` with Secure Enclave
+- Private key never leaves secure hardware
+
+---
+
+### Step 5: Exchange Nonce for JWT
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────┐                              ┌─────────────┐
+│             │  POST /capture/trust         │             │
+│   iOS App   │  ─────────────────────────►  │   Server    │
+│             │  { nonce }                   │             │
+│             │                              │             │
+│             │  ◄─────────────────────────  │             │
+│             │  trust_token (JWT)           │             │
+└─────────────┘                              └─────────────┘
+```
+
+</div>
+
+- App sends the nonce received in Step 2
+- Server validates nonce (one-time use) and issues signed JWT
+- JWT contains: publisher_id, device_id, capture_id, attestation method
+
+---
+
+### Step 6: Save Media + Sidecar
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   photo.jpg              photo.sidecar.json             │
+│   ┌─────────────┐        ┌─────────────────────────┐    │
+│   │             │        │ {                       │    │
+│   │   [image    │        │   "version": "1.0",     │    │
+│   │    bytes]   │        │   "capture_trust": {    │    │
+│   │             │        │     "jwt": "eyJ..."     │    │
+│   │             │        │   },                    │    │
+│   │             │        │   "media_integrity": {  │    │
+│   │             │        │     "content_hash":..., │    │
+│   └─────────────┘        │     "signature": ...    │    │
+│                          │   }                     │    │
+│                          │ }                       │    │
+│                          └─────────────────────────┘    │
+│                                                         │
+│   Both files travel together                            │
+└─────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+- Save original media file (unchanged)
+- Save sidecar JSON with both trust layers
+- Files can be stored, shared, or uploaded together
+
+---
+
+## Verification Flow
+
+### Anyone Can Verify
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   INPUT: media file + sidecar.json                      │
+│                                                         │
+│   ┌─────────────────────────────────────────────────┐   │
+│   │                                                 │   │
+│   │  1. Parse sidecar JSON                          │   │
+│   │           ↓                                     │   │
+│   │  2. Verify JWT signature (fetch JWKS)           │   │
+│   │           ↓                                     │   │
+│   │  3. Compute SHA-256 of media                    │   │
+│   │           ↓                                     │   │
+│   │  4. Compare with content_hash                   │   │
+│   │           ↓                                     │   │
+│   │  5. Verify ECDSA signature                      │   │
+│   │           ↓                                     │   │
+│   │  6. Confirm capture_id matches                  │   │
+│   │                                                 │   │
+│   └─────────────────────────────────────────────────┘   │
+│                                                         │
+│   OUTPUT: ✓ VALID or ✗ INVALID + reason                 │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+---
+
+## What Each Layer Proves
+
+<div style={{textAlign: 'center'}}>
+
+```
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│   CAPTURE TRUST (JWT)          MEDIA INTEGRITY          │
+│   ─────────────────            ────────────────         │
+│                                                         │
+│   ✓ Verified device            ✓ Content unchanged      │
+│   ✓ Authorized app             ✓ Signed by device       │
+│   ✓ Valid session              ✓ Timestamp bound        │
+│   ✓ Attestation method         ✓ Capture ID linked      │
+│                                                         │
+│               ╲                    ╱                    │
+│                ╲                  ╱                     │
+│                 ╲                ╱                      │
+│                  ▼              ▼                       │
+│          ┌─────────────────────────────┐                │
+│          │                             │                │
+│          │  "This exact content was    │                │
+│          │   captured on a verified    │                │
+│          │   device and hasn't been    │                │
+│          │   modified since."          │                │
+│          │                             │                │
+│          └─────────────────────────────┘                │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+---
+
+## Quick Reference
+
+| Step | Action | Result |
+|------|--------|--------|
+| 1 | Register device | `device_token` (one-time) |
+| 2 | Start session | `capture_id` + `nonce` |
+| 3 | Capture media | Raw bytes |
+| 4 | Sign in Secure Enclave | `signature` + `public_key` |
+| 5 | Exchange nonce | `trust_token` (JWT) |
+| 6 | Save files | `media` + `sidecar.json` |
+| 7 | Verify | ✓ or ✗ |
+
+---
+
+## Next Steps
+
+- [Two-Layer Trust](/concepts/two-layer-trust) — Deep dive into the trust model
+- [Quick Start](/guides/quick-start) — Verify media in 5 minutes
+- [iOS Integration](/guides/ios-integration) — Capture signed media
