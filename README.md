@@ -2,6 +2,8 @@
 
 Technical documentation for the SignedShot media authenticity protocol.
 
+[![CI](https://github.com/SignedShot/signedshot-docs/actions/workflows/ci.yml/badge.svg)](https://github.com/SignedShot/signedshot-docs/actions/workflows/ci.yml)
+
 Built with [Docusaurus](https://docusaurus.io/).
 
 ## Development
