@@ -59,10 +59,11 @@ let sidecar = try await signedShot.createSidecar(imageData: jpegData, session: s
 
 ### Verify media
 
-Use the Python library to verify any SignedShot capture.
+Use the Python library or Rust CLI to verify any SignedShot capture.
 
 ```bash
-pip install signedshot
+pip install signedshot        # Python
+cargo install signedshot-validator  # or Rust
 ```
 
 ```python
