@@ -8,15 +8,23 @@ Get up and running with SignedShot in 5 minutes. This guide shows you how to ver
 
 ## Prerequisites
 
-- Python 3.12+
+- Python 3.12+ or Rust toolchain
 - A media file with its sidecar (e.g., `photo.jpg` and `photo.sidecar.json`)
 
 Don't have test files? Use the [interactive demo](https://signedshot.io/demo) to capture media and download both files.
 
-## Install the Library
+## Install
+
+### Python (recommended)
 
 ```bash
 pip install signedshot
+```
+
+### Rust
+
+```bash
+cargo install signedshot-validator
 ```
 
 ## Verify Media
@@ -77,7 +85,7 @@ result = signedshot.validate(sidecar_json, media_bytes)
 
 ## CLI Usage
 
-The library also installs a command-line tool:
+Both installation methods include the `signedshot` command-line tool:
 
 ```bash
 # Basic validation
@@ -94,18 +102,29 @@ Validating sidecar: photo.sidecar.json
 Media file: photo.jpg
 [OK] Sidecar parsed
 [OK] JWT decoded
-  Issuer: https://api.signedshot.io
-  Publisher: 9a5b1062-a8fe-4871-bdc1-fe54e96cbf1c
-  Device: ea5c9bfe-6bbc-4ee2-b82d-0bcfcc185ef1
-  Capture: ac85dbd2-d8a8-4d0b-9e39-2feef5f7b19f
-  Method: app_check
-  App ID: io.signedshot.capture
+[..] Fetching JWKS from https://api.signedshot.io
 [OK] JWT signature verified
-[OK] Content hash matches
+[OK] Content hash verified
 [OK] Media signature verified
-[OK] Capture IDs match
+[OK] Capture ID match verified
 
-✓ VALID - Media authenticity verified
+Claims:
+  Issuer:       https://api.signedshot.io
+  Capture ID:   ac85dbd2-d8a8-4d0b-9e39-2feef5f7b19f
+  Publisher ID: 9a5b1062-a8fe-4871-bdc1-fe54e96cbf1c
+  Device ID:    ea5c9bfe-6bbc-4ee2-b82d-0bcfcc185ef1
+  Method:       app_check
+  App ID:       io.signedshot.capture
+  Issued At:    1770319379
+  Key ID:       2ad290db...
+
+Media Integrity:
+  Content Hash: a4d14b8e32df4123aa91ee172257856456d90f52...
+  Capture ID:   ac85dbd2-d8a8-4d0b-9e39-2feef5f7b19f
+  Captured At:  2026-02-05T19:22:58Z
+  Public Key:   BDX7zNtobXIurJGN5XQFNISR/SLP1u/hhlKng/gW...
+
+[OK] Validation complete
 ```
 
 ## What Gets Validated
