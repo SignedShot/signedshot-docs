@@ -18,6 +18,7 @@ const sidebars: SidebarsConfig = {
       label: 'Guides',
       items: [
         'guides/quick-start',
+        'guides/using-the-app',
         'guides/ios-integration',
         'guides/python-validation',
       ],
