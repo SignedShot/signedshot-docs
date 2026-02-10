@@ -151,6 +151,7 @@ const config: Config = {
       appId: '06JTGHPWUR',
       apiKey: 'd28cbe328c68c3fb8896a7646770d01b',
       indexName: 'Documentation Website',
+      contextualSearch: false,
     },
   } satisfies Preset.ThemeConfig,
 };
