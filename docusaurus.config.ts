@@ -83,6 +83,10 @@ const config: Config = {
       },
       items: [
         {
+          type: 'search',
+          position: 'left',
+        },
+        {
           href: 'https://github.com/SignedShot',
           position: 'right',
           className: 'header-github-link',
