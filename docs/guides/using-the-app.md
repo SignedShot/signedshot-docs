@@ -82,7 +82,11 @@ You can verify a captured photo using the CLI or the API.
 ### CLI
 
 ```bash
+# Install via pip or cargo
 pip install signedshot
+# or: cargo install signedshot-validator
+
+# Validate
 signedshot validate photo_20260209_143052.sidecar.json photo_20260209_143052.jpg
 ```
 
