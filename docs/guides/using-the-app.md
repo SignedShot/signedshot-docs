@@ -6,6 +6,12 @@ sidebar_position: 4
 
 A step-by-step guide to capturing authenticated photos with the SignedShot iOS app.
 
+:::tip Get the App
+Download SignedShot from the App Store to get started.
+
+[![Download on the App Store](/img/app-store-badge.svg)](https://apps.apple.com/app/signedshot/idPLACEHOLDER)
+:::
+
 ## Overview
 
 The SignedShot app captures photos with cryptographic proof of authenticity. Each photo is signed by your device's hardware key and verified by the SignedShot API. The result is two files: the original photo and a sidecar proof that anyone can verify.
