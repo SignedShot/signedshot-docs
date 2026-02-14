@@ -136,7 +136,7 @@ const config: Config = {
             },
             {
               label: 'Download App',
-              href: 'https://apps.apple.com/app/signedshot/idPLACEHOLDER',
+              href: 'https://apps.apple.com/app/signedshot/id6759012195',
             },
             {
               label: 'GitHub',
