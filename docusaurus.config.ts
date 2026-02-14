@@ -135,6 +135,10 @@ const config: Config = {
               href: 'https://signedshot.io/demo',
             },
             {
+              label: 'Download App',
+              href: 'https://apps.apple.com/app/signedshot/id6759012195',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/SignedShot',
             },
