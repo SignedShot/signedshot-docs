@@ -9,7 +9,7 @@ A step-by-step guide to capturing authenticated photos with the SignedShot iOS a
 :::tip Get the App
 Download SignedShot from the App Store to get started.
 
-[![Download on the App Store](/img/app-store-badge.svg)](https://apps.apple.com/app/signedshot/idPLACEHOLDER)
+[![Download on the App Store](/img/app-store-badge.svg)](https://apps.apple.com/app/signedshot/id6759012195)
 :::
 
 ## Overview
