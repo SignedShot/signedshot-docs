@@ -36,6 +36,7 @@ Capture Trust answers: **"Was this captured by a legitimate device?"**
 | `capture_id` | Unique session identifier |
 | `method` | Attestation method: `sandbox`, `app_check`, or `app_attest` |
 | `app_id` | App bundle ID (when attested) |
+| `device_public_key_fingerprint` | SHA-256 of the device's content-signing public key |
 | `issued_at` | Unix timestamp |
 
 ### Verification
@@ -83,6 +84,12 @@ Neither layer alone is sufficient:
 | **Media Integrity only** | Content wasn't modified | Device was legitimate |
 
 Together, they create a complete chain of trust from device verification to content integrity.
+
+### Cross-Layer Binding
+
+The two layers are cryptographically bound through the `device_public_key_fingerprint` — a SHA-256 hash of the device's content-signing public key. This fingerprint is computed at device registration and included in every JWT.
+
+During verification, the validator computes `SHA-256(public_key)` from the media integrity layer and checks it matches the `device_public_key_fingerprint` in the JWT. This prevents an attacker from combining a valid JWT with a media integrity proof signed by a different key.
 
 ## The Sidecar File
 

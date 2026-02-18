@@ -201,6 +201,7 @@ Used for:
   "capture_id": "550e8400-e29b-41d4-a716-446655440000",
   "publisher_id": "9a5b1062-a8fe-4871-bdc1-fe54e96cbf1c",
   "device_id": "ea5c9bfe-6bbc-4ee2-b82d-0bcfcc185ef1",
+  "device_public_key_fingerprint": "4ca63447117ea5c99614bcbe433eb393a1f8b2e14c7b3f5d8e9a0b1c2d3e4f56",
   "attestation": {
     "method": "app_check",
     "app_id": "io.signedshot.capture"
@@ -313,6 +314,12 @@ def cross_validate(sidecar, jwt_payload):
     # Capture IDs must match
     if sidecar.media_integrity.capture_id != jwt_payload['capture_id']:
         return False, "Capture ID mismatch"
+
+    # Device public key fingerprint must match (cross-layer binding)
+    public_key_bytes = base64_decode(sidecar.media_integrity.public_key)
+    fingerprint = sha256(public_key_bytes).hex()
+    if fingerprint != jwt_payload['device_public_key_fingerprint']:
+        return False, "Device public key fingerprint mismatch"
 
     return True, None
 ```
