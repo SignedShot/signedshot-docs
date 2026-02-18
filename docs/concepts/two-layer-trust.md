@@ -13,7 +13,7 @@ When you capture media with SignedShot, two things happen:
 1. **Capture Trust** — The server issues a signed token proving a verified device started a capture session
 2. **Media Integrity** — The device signs the content hash using its Secure Enclave
 
-Together, these prove: *"This exact content was captured on a verified device, in an authorized session, and hasn't been modified since."*
+Together, these prove: *"This exact content was captured on a verified device, in an authorized session, and hasn't been modified since."* Verifiers choose which claims to trust and at what level.
 
 ## Layer 1: Capture Trust
 

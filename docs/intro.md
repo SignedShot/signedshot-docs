@@ -7,7 +7,7 @@ slug: /
 
 **Signed at capture. Verified anywhere.**
 
-SignedShot is an open protocol for proving photos and videos haven't been altered since capture—cryptographically, not by guessing.
+SignedShot is an open protocol that creates cryptographic evidence that photos and videos haven't been altered since capture—proof, not guessing.
 
 ## The Problem
 
@@ -15,7 +15,7 @@ Digital manipulation is easy and getting easier. Anyone can alter an image in se
 
 This leads to an erosion of trust in visual media—and no way to prove "I didn't edit this."
 
-SignedShot solves this by embedding cryptographic proof at the moment of capture.
+SignedShot solves this by creating verifiable evidence at the moment of capture.
 
 ## A Different Approach
 
@@ -25,7 +25,7 @@ SignedShot doesn't detect fakes. It proves authenticity at the moment of capture
 
 The result: **"This device captured this content at this time."**
 
-Anyone can verify the proof independently. Open source, no vendor lock-in.
+Anyone can verify independently — no account, no platform, no vendor lock-in.
 
 ## How It Works: Two Layers
 
