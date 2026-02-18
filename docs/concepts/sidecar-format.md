@@ -75,6 +75,7 @@ The `capture_trust.jwt` is a standard JWT. When decoded, it contains:
   "capture_id": "550e8400-e29b-41d4-a716-446655440000",
   "publisher_id": "9a5b1062-a8fe-4871-bdc1-fe54e96cbf1c",
   "device_id": "ea5c9bfe-6bbc-4ee2-b82d-0bcfcc185ef1",
+  "device_public_key_fingerprint": "4ca63447117ea5c99614bcbe433eb393...",
   "attestation": {
     "method": "app_check",
     "app_id": "io.signedshot.capture"
@@ -93,6 +94,7 @@ The `capture_trust.jwt` is a standard JWT. When decoded, it contains:
 | `capture_id` | string | Unique capture session ID |
 | `publisher_id` | string | Publisher UUID |
 | `device_id` | string | Device UUID |
+| `device_public_key_fingerprint` | string | SHA-256 of the device's content-signing public key (hex) |
 | `attestation` | object | Attestation details |
 
 ### attestation Object
@@ -171,6 +173,7 @@ To verify a sidecar:
    - Verify ECDSA signature using `public_key`
 4. **Cross-validate**
    - Confirm `capture_id` matches in both JWT and media_integrity
+   - Confirm `SHA-256(public_key)` matches `device_public_key_fingerprint` in the JWT
 
 ## Next Steps
 

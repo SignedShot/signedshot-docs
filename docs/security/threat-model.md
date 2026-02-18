@@ -71,6 +71,14 @@ SignedShot proves "this device captured this content at this time" — not "this
 
 **Verification:** Check the `method` field in the JWT. Reject `sandbox` for high-trust use cases.
 
+### Cross-Layer Substitution
+
+**Threat:** An attacker performs a legitimate capture to obtain a valid JWT, then generates a new key pair and signs different content with it, combining the valid JWT with the forged media integrity proof.
+
+**Mitigation:** The JWT contains `device_public_key_fingerprint` — the SHA-256 hash of the device's content-signing public key, computed at registration. The validator checks that `SHA-256(public_key from media integrity)` matches this fingerprint, binding the two layers cryptographically.
+
+**Verification:** Confirm `SHA-256(public_key)` matches `device_public_key_fingerprint` in the JWT.
+
 ### Metadata Forgery
 
 **Threat:** An attacker manipulates EXIF timestamps, GPS coordinates, or other metadata.
@@ -182,6 +190,7 @@ For maximum security, verify all of the following:
 - [ ] Content hash matches file
 - [ ] Media integrity signature valid
 - [ ] `capture_id` matches in JWT and media integrity
+- [ ] `device_public_key_fingerprint` matches `SHA-256(public_key)` from media integrity
 - [ ] `captured_at` is reasonable (not in future, not too old)
 
 ## Next Steps
