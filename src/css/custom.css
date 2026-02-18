@@ -150,6 +150,19 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--ss-smoke);
 }
 
+/* Mobile: collapse search to icon only so it doesn't overlap the logo */
+@media (max-width: 996px) {
+  .navbar .DocSearch-Button {
+    width: 36px;
+    padding: 0 8px;
+  }
+
+  .navbar .DocSearch-Button-Placeholder,
+  .navbar .DocSearch-Button-Keys {
+    display: none;
+  }
+}
+
 .navbar .DocSearch-Button:hover {
   background: var(--ss-smoke);
   border-color: var(--ss-steel);
