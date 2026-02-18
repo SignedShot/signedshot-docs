@@ -25,7 +25,7 @@ SignedShot doesn't detect fakes. It proves authenticity at the moment of capture
 
 The result: **"This device captured this content at this time."**
 
-Anyone can verify independently — no account, no platform, no vendor lock-in.
+Anyone can verify independently. No account, no platform, no vendor lock-in.
 
 ## How It Works: Two Layers
 
